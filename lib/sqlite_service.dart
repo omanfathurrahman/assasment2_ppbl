@@ -16,7 +16,7 @@ class DatabaseHandler {
     );
   }
 
-  Future<int> insertSaham(List<TukangOjek> daftarTukangOjek) async {
+  Future<int> insertTukangOjek(List<TukangOjek> daftarTukangOjek) async {
     int result = 0;
     final Database db = await initializeDB();
     for (var tukangojek in daftarTukangOjek) {
@@ -25,19 +25,9 @@ class DatabaseHandler {
     return result;
   }
 
-  Future<List<TukangOjek>> retrieveSaham() async {
+  Future<List<TukangOjek>> retrieveTukangOjek() async {
     final Database db = await initializeDB();
     final List<Map<String, Object?>> queryResult = await db.query('tukangojek');
     return queryResult.map((e) => TukangOjek.fromMap(e)).toList();
-  }
-
-  Future<int> updateSaham(TukangOjek saham) async {
-    final Database db = await initializeDB();
-    return await db.update(
-      'tukangojek',
-      saham.toMap(),
-      where: 'id = ?',
-      whereArgs: [saham.id],
-    );
   }
 }

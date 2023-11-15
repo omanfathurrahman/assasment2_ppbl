@@ -1,4 +1,6 @@
 import 'package:assasment2_ppbl/models/tukang_ojek.dart';
+import 'package:assasment2_ppbl/tambah_transaksi.dart';
+import 'package:assasment2_ppbl/tambah_tukang_ojek.dart';
 import 'package:flutter/material.dart';
 import 'sqlite_service.dart';
 
@@ -51,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
       TukangOjek(nama: "Asep", nopol: "1234"),
     ];
 
-    return await handler.insertSaham(listOfUsers);
+    return await handler.insertTukangOjek(listOfUsers);
   }
 
   void loadUlang() {
@@ -76,9 +78,24 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TambahTukangOjek(
+                    onPressed: loadUlang,
+                  ),
+                ),
+              );
+            },
+            icon: const Icon(Icons.add),
+          ),
+        ],
       ),
       body: FutureBuilder(
-        future: handler.retrieveSaham(),
+        future: handler.retrieveTukangOjek(),
         builder:
             (BuildContext context, AsyncSnapshot<List<TukangOjek>> snapshot) {
           if (snapshot.hasData) {
@@ -120,11 +137,14 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //       builder: (context) => {TambahSaham(onPressed: loadUlang)}),
-          // );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TambahTransaksi(
+                onPressed: loadUlang,
+              ),
+            ),
+          );
         },
         tooltip: 'Increment Counter',
         child: const Icon(Icons.add),
